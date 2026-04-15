@@ -1,0 +1,14 @@
+{% extends 'empleados/base.html' %}
+{% block content %}
+<div class="page-body"><div class="container-fluid"><div class="page-title"><div class="row"><div class="col-6"><h4>Crear Alumno</h4></div><div class="col-6"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{% url 'empleados:dahsboard' %}"><svg class="stroke-icon"><use href="../assets/svg/icon-sprite.svg#stroke-home"></use></svg></a></li><li class="breadcrumb-item">Alumnos</li><li class="breadcrumb-item active">Crear</li></ol></div></div></div></div>
+<div class="container-fluid"><div class="card"><div class="card-header card-no-border pb-0"><h5>Datos del alumno</h5></div><div class="card-body"><form method="POST" enctype="multipart/form-data">{% csrf_token %}<div class="row g-3">
+<div class="col-md-4"><label class="form-label">Código personal</label>{{ form.codigo_personal }}</div>
+<div class="col-md-4"><label class="form-label">Nombres</label>{{ form.nombres }}</div>
+<div class="col-md-4"><label class="form-label">Apellidos</label>{{ form.apellidos }}</div>
+<div class="col-md-4"><label class="form-label">Fecha de nacimiento</label>{{ form.fecha_nacimiento }}</div>
+<div class="col-md-4"><label class="form-label">CUI</label>{{ form.cui }}</div>
+<div class="col-md-4"><label class="form-label">Teléfono</label>{{ form.tel }}</div>
+<div class="col-md-6"><label class="form-label">Imagen</label>{{ form.imagen }}</div>
+<div class="col-md-6 d-flex align-items-center gap-2 mt-4">{{ form.activo }}<label class="form-label mb-0">Activo</label></div>
+</div><div class="form-footer text-end mt-4"><button class="btn btn-primary" type="submit">Guardar</button></div></form></div></div></div></div>
+{% endblock %}
