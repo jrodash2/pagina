@@ -5,7 +5,7 @@ from .models import ConfiguracionSitio
 
 def sitio_context(request):
     try:
-        config = ConfiguracionSitio.objects.order_by("id").first()
+        config = ConfiguracionSitio.objects.order_by("id").first() or ConfiguracionSitio()
     except (OperationalError, ProgrammingError):
         config = None
 

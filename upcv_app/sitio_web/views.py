@@ -18,7 +18,7 @@ from .models import (
 
 
 def _common_context():
-    config = ConfiguracionSitio.objects.order_by("id").first()
+    config = ConfiguracionSitio.objects.order_by("id").first() or ConfiguracionSitio()
     return {
         "sitio_config": config,
         "servicios_menu": Servicio.objects.filter(activo=True)[:8],
