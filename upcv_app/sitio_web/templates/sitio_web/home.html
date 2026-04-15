@@ -1,0 +1,44 @@
+{% extends 'sitio_web/base_public.html' %}
+{% block content %}
+<section class="hero">
+  <div class="container py-5">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-7">
+        <h1 class="display-5 fw-bold">{{ sitio_config.slogan|default:'Transformamos tu empresa con tecnología inteligente' }}</h1>
+        <p class="lead">{{ sitio_config.descripcion|default:'Soluciones de infraestructura, desarrollo, nube y educación virtual para modernizar operaciones.' }}</p>
+        <a href="{% url 'sitio_web:contacto' %}" class="btn btn-primary btn-lg me-2">Solicitar diagnóstico</a>
+        <a href="{% url 'sitio_web:servicios' %}" class="btn btn-outline-light btn-lg">Ver servicios</a>
+      </div>
+      <div class="col-lg-5">
+        <div id="heroSlides" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner rounded-4 shadow">
+            {% for slide in slides %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <img src="{{ slide.imagen.url }}" class="d-block w-100 hero-img" alt="{{ slide.titulo }}">
+            </div>
+            {% empty %}
+            <div class="carousel-item active"><div class="placeholder-slide p-5 text-center">Configura tus banners en el admin.</div></div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5"><div class="container"><h2 class="section-title">Servicios destacados</h2><div class="row g-3">{% for s in servicios_destacados %}<div class="col-md-6 col-lg-4"><div class="card h-100 shadow-sm service-card"><div class="card-body"><i class="{{ s.icono|default:'fa fa-cogs' }} fa-2x mb-3 text-primary"></i><h5>{{ s.titulo }}</h5><p>{{ s.resumen }}</p><a href="{{ s.get_absolute_url }}" class="stretched-link">Ver más</a></div></div></div>{% endfor %}</div></div></section>
+
+<section class="py-5 bg-light"><div class="container"><h2 class="section-title">Beneficios y soluciones</h2><div class="row g-3">{% for b in beneficios %}<div class="col-md-6 col-lg-3"><div class="card h-100 border-0 shadow-sm"><div class="card-body"><i class="{{ b.icono|default:'fa fa-check-circle' }} text-success"></i><h6 class="mt-2">{{ b.titulo }}</h6><p class="small">{{ b.descripcion }}</p></div></div></div>{% endfor %}</div></div></section>
+
+{% if sitio_config.mostrar_estadisticas %}<section class="py-5"><div class="container"><div class="row g-3 text-center">{% for e in estadisticas %}<div class="col-6 col-md-3"><div class="stat-card"><h3 class="counter" data-value="{{ e.valor_numerico|default:0 }}">0</h3><p>{{ e.titulo }}</p></div></div>{% endfor %}</div></div></section>{% endif %}
+
+<section class="py-5"><div class="container"><h2 class="section-title">Proyectos destacados</h2><div class="row g-3">{% for p in proyectos_destacados %}<div class="col-md-6 col-lg-4"><div class="card h-100 shadow-sm">{% if p.imagen_portada %}<img src="{{ p.imagen_portada.url }}" class="card-img-top project-thumb" alt="{{ p.titulo }}">{% endif %}<div class="card-body"><h5>{{ p.titulo }}</h5><p>{{ p.resumen }}</p><a href="{{ p.get_absolute_url }}" class="btn btn-outline-primary btn-sm">Detalle</a></div></div></div>{% endfor %}</div></div></section>
+
+{% if sitio_config.mostrar_testimonios %}<section class="py-5 bg-light"><div class="container"><h2 class="section-title">Testimonios</h2><div class="row g-3">{% for t in testimonios %}<div class="col-md-6 col-lg-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body"><p>“{{ t.comentario|truncatechars:160 }}”</p><strong>{{ t.nombre }}</strong><div class="small text-muted">{{ t.cargo }} {{ t.empresa }}</div></div></div></div>{% endfor %}</div></div></section>{% endif %}
+
+{% if sitio_config.mostrar_aliados %}<section class="py-5"><div class="container"><h2 class="section-title">Aliados tecnológicos</h2><div class="row g-4 align-items-center">{% for a in aliados %}<div class="col-6 col-md-3 text-center">{% if a.logo %}<img src="{{ a.logo.url }}" class="ally-logo" alt="{{ a.nombre }}">{% endif %}</div>{% endfor %}</div></div></section>{% endif %}
+
+{% if sitio_config.mostrar_faqs %}<section class="py-5 bg-light"><div class="container"><h2 class="section-title">Preguntas frecuentes</h2><div class="accordion" id="faqAcc">{% for f in faqs %}<div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" data-bs-toggle="collapse" data-bs-target="#faq{{ forloop.counter }}">{{ f.pregunta }}</button></h2><div id="faq{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" data-bs-parent="#faqAcc"><div class="accordion-body">{{ f.respuesta }}</div></div></div>{% endfor %}</div></div></section>{% endif %}
+
+<section class="py-5"><div class="container"><div class="row g-4"><div class="col-lg-6"><h2 class="section-title">Conversemos sobre tu proyecto</h2><p>Completa el formulario y nuestro equipo te contactará.</p></div><div class="col-lg-6">{% include 'sitio_web/partials/contact_form.html' %}</div></div></div></section>
+{% endblock %}

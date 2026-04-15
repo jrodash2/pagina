@@ -1,0 +1,6 @@
+{% extends 'sitio_web/base_public.html' %}
+{% block title %}Contacto | {{ sitio_config.nombre_sitio }}{% endblock %}
+{% block content %}
+<section class="inner-hero"><div class="container"><h1>Contacto</h1><p>Conversemos sobre tus objetivos de transformación digital.</p></div></section>
+<section class="py-5"><div class="container"><div class="row g-4"><div class="col-lg-7">{% include 'sitio_web/partials/contact_form.html' %}</div><div class="col-lg-5"><div class="card border-0 shadow-sm"><div class="card-body"><h5>Información directa</h5><p><i class="fa fa-phone"></i> {{ sitio_config.telefonos }}</p><p><i class="fa fa-envelope"></i> {{ sitio_config.correo }}</p><p><i class="fa fa-map-marker"></i> {{ sitio_config.direccion }}</p>{% if sitio_config.mapa_url %}<a class="btn btn-outline-primary btn-sm" href="{{ sitio_config.mapa_url }}" target="_blank">Ver ubicación</a>{% endif %}</div></div></div></div></div></section>
+{% endblock %}
