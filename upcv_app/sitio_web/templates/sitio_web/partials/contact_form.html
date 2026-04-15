@@ -1,0 +1,8 @@
+<form method="post" class="card shadow-sm border-0"><div class="card-body">{% csrf_token %}
+  <div class="row g-2">
+    {% for field in form %}
+      {% if field.name != 'website' %}<div class="col-md-6 {% if field.name == 'mensaje' %}col-12{% endif %}"><label class="form-label">{{ field.label }}</label>{{ field }}{% if field.errors %}<small class="text-danger">{{ field.errors|striptags }}</small>{% endif %}</div>{% else %}{{ field }}{% endif %}
+    {% endfor %}
+  </div>
+  <button class="btn btn-primary mt-3" type="submit">Enviar solicitud</button>
+</div></form>

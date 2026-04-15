@@ -1,0 +1,16 @@
+:root{--primary:#1f3a93;--secondary:#00b4d8;}
+body{font-family:Montserrat,system-ui,sans-serif;color:#1f2937;padding-top:72px}
+.site-nav{background:linear-gradient(130deg,var(--primary),#162d6f)}
+.site-logo{height:34px;width:auto}
+.hero{background:linear-gradient(160deg,#0b1739,#1f3a93);color:#fff}
+.hero-img{height:340px;object-fit:cover}
+.placeholder-slide{background:#162d6f;color:#fff}
+.section-title{font-size:1.8rem;font-weight:700;margin-bottom:1.2rem}
+.service-card{transition:.25s ease}.service-card:hover{transform:translateY(-4px)}
+.project-thumb{height:210px;object-fit:cover}
+.stat-card{background:#0f172a;color:#fff;border-radius:14px;padding:1.2rem}
+.inner-hero{background:#f1f5f9;padding:4rem 0 2.2rem}
+.site-footer{background:#0f172a;color:#e2e8f0}
+.ally-logo{max-height:54px;max-width:100%;object-fit:contain;filter:grayscale(1);opacity:.85}
+.whatsapp-float{position:fixed;right:16px;bottom:16px;background:#1db954;color:#fff;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:1.5rem;box-shadow:0 8px 22px rgba(0,0,0,.25);z-index:999}
+@media (max-width:768px){.hero-img{height:250px}}

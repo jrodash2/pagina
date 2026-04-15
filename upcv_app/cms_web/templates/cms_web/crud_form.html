@@ -1,0 +1,9 @@
+{% extends 'cms_web/base.html' %}
+{% block content %}
+<div class="card"><div class="card-header"><h5>{{ view.model._meta.verbose_name|title }}</h5></div><div class="card-body">
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+<div class="row g-3">{% for field in form %}<div class="col-md-6"><label class="form-label">{{ field.label }}</label>{{ field }}{% if field.errors %}<small class="text-danger">{{ field.errors|striptags }}</small>{% endif %}</div>{% endfor %}</div>
+<button class="btn btn-primary mt-3" type="submit">Guardar</button>
+<a href="javascript:history.back()" class="btn btn-light mt-3">Cancelar</a>
+</form></div></div>
+{% endblock %}
