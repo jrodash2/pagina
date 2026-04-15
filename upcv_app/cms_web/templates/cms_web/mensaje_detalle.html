@@ -1,0 +1,11 @@
+{% extends 'cms_web/base.html' %}
+{% block content %}
+<div class="card"><div class="card-header"><h5>Mensaje de contacto</h5></div><div class="card-body">
+<p><strong>Nombre:</strong> {{ mensaje.nombre }}</p>
+<p><strong>Email:</strong> {{ mensaje.email }}</p>
+<p><strong>Teléfono:</strong> {{ mensaje.telefono }}</p>
+<p><strong>Asunto:</strong> {{ mensaje.asunto }}</p>
+<p><strong>Mensaje:</strong><br>{{ mensaje.mensaje|linebreaks }}</p>
+<form method="post">{% csrf_token %}{{ form.as_p }}<button class="btn btn-primary">Guardar estado</button></form>
+</div></div>
+{% endblock %}

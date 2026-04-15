@@ -1,0 +1,6 @@
+{% extends 'sitio_web/base_public.html' %}
+{% block title %}Nosotros | {{ sitio_config.nombre_sitio }}{% endblock %}
+{% block content %}
+<section class="inner-hero"><div class="container"><h1>Nosotros</h1><p>{{ sitio_config.descripcion_larga|default:sitio_config.descripcion_corta }}</p></div></section>
+<section class="py-5"><div class="container"><div class="row g-4"><div class="col-md-12"><h3>¿Quiénes somos?</h3><p>{{ sitio_config.descripcion_larga|default:'Somos un aliado tecnológico para empresas e instituciones que buscan modernizar su operación.' }}</p></div></div></div></section>
+{% endblock %}

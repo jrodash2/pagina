@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}CMS Web{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'assets/css/vendors/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/vendors/datatables.css' %}">
+<link rel="stylesheet" href="{% static 'cms_web/css/cms.css' %}">
+</head><body>
+<div class="page-wrapper compact-wrapper" id="pageWrapper"><div class="page-body-wrapper">
+<aside class="sidebar-wrapper"><div class="logo-wrapper p-3"><a href="{% url 'cms_web:dashboard' %}" class="text-dark fw-bold">CMS Tecnologías GT</a></div>
+<nav><ul class="sidebar-links list-unstyled px-3">
+<li><a href="{% url 'cms_web:dashboard' %}">Dashboard</a></li>
+<li><a href="{% url 'cms_web:configuracion' %}">Configuración</a></li>
+<li><a href="{% url 'cms_web:heroes' %}">Hero Slides</a></li>
+<li><a href="{% url 'cms_web:paginas' %}">Páginas</a></li>
+<li><a href="{% url 'cms_web:servicios' %}">Servicios</a></li>
+<li><a href="{% url 'cms_web:proyectos' %}">Proyectos</a></li>
+<li><a href="{% url 'cms_web:proyecto_imagenes' %}">Imágenes Proyectos</a></li>
+<li><a href="{% url 'cms_web:testimonios' %}">Testimonios</a></li>
+<li><a href="{% url 'cms_web:aliados' %}">Aliados</a></li>
+<li><a href="{% url 'cms_web:faqs' %}">FAQs</a></li>
+<li><a href="{% url 'cms_web:bloques' %}">Bloques Inicio</a></li>
+<li><a href="{% url 'cms_web:mensajes' %}">Mensajes</a></li>
+<li><a href="/" target="_blank">Ver sitio público</a></li>
+<li><a href="{% url 'cms_web:logout' %}">Cerrar sesión</a></li>
+</ul></nav></aside>
+<div class="page-body p-4"><div class="container-fluid">
+{% if messages %}{% for m in messages %}<div class="alert alert-success">{{ m }}</div>{% endfor %}{% endif %}
+{% block content %}{% endblock %}
+</div></div>
+</div></div>
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+</body></html>
