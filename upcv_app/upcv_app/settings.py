@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'upcv_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Gafcomebsa',  # Cambia esto por el nombre de tu base de datos
+        'NAME': 'pagina',  # Cambia esto por el nombre de tu base de datos
         'USER': 'postgres',
         'PASSWORD': 'Jrodash2#',  # La contraseña que configuraste
         'HOST': 'localhost',
