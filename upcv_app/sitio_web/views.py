@@ -2,11 +2,12 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
 
-from .forms import ContactoLeadForm
+from .forms import MensajeContactoForm
 from .models import (
     BloqueContenido,
-    ContactoLead,
+    ConfiguracionSitio,
     HeroSlide,
+    MensajeContacto,
     Pagina,
     PreguntaFrecuente,
     Proyecto,
@@ -17,19 +18,19 @@ from .models import (
 
 
 def _common_context():
+    config = ConfiguracionSitio.objects.order_by("id").first()
     return {
-        "servicios_menu": Servicio.objects.filter(activo=True)[:6],
-        "paginas_menu": Pagina.objects.filter(activa=True, mostrar_en_menu=True),
+        "sitio_config": config,
+        "servicios_menu": Servicio.objects.filter(activo=True)[:8],
+        "paginas_menu": Pagina.objects.filter(publicada=True, mostrar_en_menu=True),
     }
 
 
 @require_http_methods(["GET", "POST"])
 def home(request):
-    form = ContactoLeadForm(request.POST or None)
+    form = MensajeContactoForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
-        lead = form.save(commit=False)
-        lead.ip = request.META.get("REMOTE_ADDR")
-        lead.save()
+        form.save()
         messages.success(request, "Gracias, recibimos tu solicitud. Te contactaremos pronto.")
         return redirect("sitio_web:contacto")
 
@@ -38,13 +39,13 @@ def home(request):
         "slides": HeroSlide.objects.filter(activo=True),
         "servicios_destacados": Servicio.objects.filter(activo=True, destacado=True)[:6],
         "proyectos_destacados": Proyecto.objects.filter(activo=True, destacado=True)[:6],
-        "testimonios": Testimonio.objects.filter(activo=True, destacado=True)[:8],
+        "testimonios": Testimonio.objects.filter(activo=True)[:8],
         "faqs": PreguntaFrecuente.objects.filter(activo=True)[:8],
         "aliados": AliadoLogo.objects.filter(activo=True)[:16],
-        "beneficios": BloqueContenido.objects.filter(activo=True, clave="beneficios"),
+        "fortalezas": BloqueContenido.objects.filter(activo=True, clave="fortalezas"),
+        "soluciones": BloqueContenido.objects.filter(activo=True, clave="soluciones"),
         "estadisticas": BloqueContenido.objects.filter(activo=True, clave="estadisticas"),
         "cta": BloqueContenido.objects.filter(activo=True, clave="cta").first(),
-        "nosotros_home": BloqueContenido.objects.filter(activo=True, clave="nosotros_home").first(),
         "form": form,
     }
     return render(request, "sitio_web/home.html", context)
@@ -82,16 +83,14 @@ def proyecto_detalle(request, slug):
 
 @require_http_methods(["GET", "POST"])
 def contacto(request):
-    form = ContactoLeadForm(request.POST or None)
+    form = MensajeContactoForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
-        lead: ContactoLead = form.save(commit=False)
-        lead.ip = request.META.get("REMOTE_ADDR")
-        lead.save()
-        messages.success(request, "Gracias por escribirnos. Te responderemos a la brevedad.")
+        mensaje: MensajeContacto = form.save()
+        messages.success(request, f"Mensaje enviado correctamente, {mensaje.nombre}.")
         return redirect("sitio_web:contacto")
     return render(request, "sitio_web/contacto.html", {**_common_context(), "form": form})
 
 
 def pagina_detalle(request, slug):
-    pagina = get_object_or_404(Pagina, slug=slug, activa=True)
+    pagina = get_object_or_404(Pagina, slug=slug, publicada=True)
     return render(request, "sitio_web/pagina_detalle.html", {**_common_context(), "pagina": pagina})

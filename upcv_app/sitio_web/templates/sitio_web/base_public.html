@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ sitio_config.nombre_sitio|default:'Sitio Corporativo' }}{% endblock %}</title>
-  <meta name="description" content="{% block meta_description %}{{ sitio_config.meta_description|default:sitio_config.descripcion|default:'Soluciones tecnológicas corporativas.' }}{% endblock %}">
+  <meta name="description" content="{% block meta_description %}{{ sitio_config.meta_description|default:sitio_config.descripcion_corta|default:'Soluciones tecnológicas corporativas.' }}{% endblock %}">
   <link rel="icon" href="{% if sitio_config and sitio_config.favicon %}{{ sitio_config.favicon.url }}{% else %}{% static 'assets/images/favicon.svg' %}{% endif %}">
   <link rel="stylesheet" href="{% static 'assets/css/vendors/bootstrap.css' %}">
   <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
@@ -29,7 +29,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'sitio_web:contacto' %}">Contacto</a></li>
         {% for p in paginas_menu %}<li class="nav-item"><a class="nav-link" href="{{ p.get_absolute_url }}">{{ p.titulo }}</a></li>{% endfor %}
         {% for i in sitio_menu_items %}<li class="nav-item"><a class="nav-link" href="{{ i.url }}">{{ i.titulo }}</a></li>{% endfor %}
-        <li class="nav-item ms-lg-2"><a class="btn btn-sm btn-outline-light" href="/aulapro/signin/">Panel</a></li>
+        <li class="nav-item ms-lg-2"><a class="btn btn-sm btn-outline-light" href="/cms/login/">Panel</a></li>
       </ul>
     </div>
   </div>
@@ -47,19 +47,19 @@
     <div class="row g-4">
       <div class="col-md-5">
         <h5>{{ sitio_config.nombre_sitio|default:'AulaPro Tech' }}</h5>
-        <p>{{ sitio_config.descripcion|default:'Integración tecnológica, servicios cloud y modernización digital para empresas.' }}</p>
+        <p>{{ sitio_config.descripcion_corta|default:'Integración tecnológica, servicios cloud y modernización digital para empresas.' }}</p>
       </div>
       <div class="col-md-4">
         <h6>Contacto</h6>
-        <p class="mb-1"><i class="fa fa-phone"></i> {{ sitio_config.telefonos|default:'(502) 0000-0000' }}</p>
-        <p class="mb-1"><i class="fa fa-envelope"></i> {{ sitio_config.correo|default:'info@empresa.com' }}</p>
+        <p class="mb-1"><i class="fa fa-phone"></i> {{ sitio_config.telefono_1|default:'(502) 0000-0000' }}</p>
+        <p class="mb-1"><i class="fa fa-envelope"></i> {{ sitio_config.email|default:'info@empresa.com' }}</p>
         <p class="mb-0"><i class="fa fa-map-marker"></i> {{ sitio_config.direccion|default:'Ciudad de Guatemala' }}</p>
       </div>
       <div class="col-md-3">
         <h6>Enlaces</h6>
         <a href="{% url 'sitio_web:servicios' %}" class="d-block text-light">Servicios</a>
         <a href="{% url 'sitio_web:proyectos' %}" class="d-block text-light">Portafolio</a>
-        <a href="/admin/sitio_web/" class="d-block text-light">Administrar contenido</a>
+        <a href="/cms/" class="d-block text-light">Administrar contenido</a>
       </div>
     </div>
     <hr>
@@ -67,8 +67,8 @@
   </div>
 </footer>
 
-{% if sitio_config and sitio_config.whatsapp_url %}
-<a href="{{ sitio_config.whatsapp_url }}" class="whatsapp-float" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i></a>
+{% if sitio_config and sitio_config.whatsapp %}
+<a href="{{ sitio_config.whatsapp }}" class="whatsapp-float" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i></a>
 {% endif %}
 
 <script src="{% static 'assets/js/jquery.min.js' %}"></script>

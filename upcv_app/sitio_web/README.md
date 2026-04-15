@@ -1,15 +1,24 @@
 # sitio_web
 
-Módulo CMS corporativo para frontend público y administración de contenido.
+Frontend público corporativo y modelos de contenido para Tecnologías de Guatemala.
 
-## Gestión
-- Editar contenido en `/admin/sitio_web/`.
-- Configurar datos globales en `Configuración del sitio`.
-- Administrar banners, servicios, proyectos, testimonios, aliados, FAQs y páginas internas.
-- Leads de contacto se almacenan en `ContactoLead`.
+## Administración de contenido
+Toda la gestión se realiza en el **CMS privado** con vistas propias:
+- `/cms/` dashboard
+- `/cms/configuracion/`
+- `/cms/heroes/`
+- `/cms/paginas/`
+- `/cms/servicios/`
+- `/cms/proyectos/`
+- `/cms/proyectos/imagenes/`
+- `/cms/testimonios/`
+- `/cms/aliados/`
+- `/cms/faqs/`
+- `/cms/bloques/`
+- `/cms/mensajes/`
 
-## Rutas públicas
-- `/` inicio
+## Frontend público
+- `/`
 - `/nosotros/`
 - `/servicios/`
 - `/servicios/<slug>/`

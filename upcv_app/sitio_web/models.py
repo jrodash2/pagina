@@ -21,31 +21,27 @@ class BaseSEOModel(models.Model):
 
 
 class ConfiguracionSitio(BaseTimeModel, BaseSEOModel):
-    nombre_sitio = models.CharField(max_length=150, default="AulaPro Tecnología")
+    nombre_sitio = models.CharField(max_length=150, default="Tecnologías de Guatemala")
     slogan = models.CharField(max_length=220, blank=True)
+    descripcion_corta = models.CharField(max_length=260, blank=True)
+    descripcion_larga = models.TextField(blank=True)
     logo = models.ImageField(upload_to="sitio_web/config/", blank=True, null=True)
     favicon = models.ImageField(upload_to="sitio_web/config/", blank=True, null=True)
-    descripcion = models.TextField(blank=True)
-    sobre_nosotros = models.TextField(blank=True)
-    mision = models.TextField(blank=True)
-    vision = models.TextField(blank=True)
-    telefonos = models.CharField(max_length=220, blank=True)
-    correo = models.EmailField(blank=True)
+    email = models.EmailField(blank=True)
+    telefono_1 = models.CharField(max_length=60, blank=True)
+    telefono_2 = models.CharField(max_length=60, blank=True)
+    whatsapp = models.URLField(blank=True)
     direccion = models.CharField(max_length=255, blank=True)
-    whatsapp_url = models.URLField(blank=True)
+    horario = models.CharField(max_length=255, blank=True)
     facebook = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
     youtube = models.URLField(blank=True)
     linkedin = models.URLField(blank=True)
-    horario = models.CharField(max_length=255, blank=True)
-    mapa_url = models.URLField(blank=True)
     footer_text = models.CharField(max_length=255, blank=True)
-    color_primario = models.CharField(max_length=20, default="#1f3a93")
-    color_secundario = models.CharField(max_length=20, default="#00b4d8")
-    mostrar_testimonios = models.BooleanField(default=True)
-    mostrar_faqs = models.BooleanField(default=True)
-    mostrar_aliados = models.BooleanField(default=True)
-    mostrar_estadisticas = models.BooleanField(default=True)
+    enlace_mapa = models.URLField(blank=True)
+    mapa_embed = models.TextField(blank=True)
+    color_primario = models.CharField(max_length=20, default="#7366ff")
+    color_secundario = models.CharField(max_length=20, default="#16c7f9")
 
     class Meta:
         verbose_name = "Configuración del sitio"
@@ -60,8 +56,8 @@ class HeroSlide(BaseTimeModel):
     subtitulo = models.CharField(max_length=220, blank=True)
     descripcion = models.TextField(blank=True)
     imagen = models.ImageField(upload_to="sitio_web/hero/")
-    cta_texto = models.CharField(max_length=60, blank=True)
-    cta_url = models.CharField(max_length=255, blank=True)
+    boton_texto = models.CharField(max_length=60, blank=True)
+    boton_url = models.CharField(max_length=255, blank=True)
     orden = models.PositiveIntegerField(default=0)
     activo = models.BooleanField(default=True)
 
@@ -78,8 +74,8 @@ class Pagina(BaseTimeModel, BaseSEOModel):
     resumen = models.CharField(max_length=220, blank=True)
     contenido = models.TextField(blank=True)
     imagen_portada = models.ImageField(upload_to="sitio_web/paginas/", blank=True, null=True)
+    publicada = models.BooleanField(default=True)
     orden = models.PositiveIntegerField(default=0)
-    activa = models.BooleanField(default=True)
     mostrar_en_menu = models.BooleanField(default=False)
 
     class Meta:
@@ -97,8 +93,8 @@ class Servicio(BaseTimeModel, BaseSEOModel):
     slug = models.SlugField(max_length=180, unique=True)
     resumen = models.CharField(max_length=250)
     descripcion = models.TextField()
+    imagen = models.ImageField(upload_to="sitio_web/servicios/", blank=True, null=True)
     icono = models.CharField(max_length=60, blank=True, help_text="Clase de icono (ejemplo: fa fa-cloud)")
-    imagen_portada = models.ImageField(upload_to="sitio_web/servicios/", blank=True, null=True)
     orden = models.PositiveIntegerField(default=0)
     activo = models.BooleanField(default=True)
     destacado = models.BooleanField(default=False)
@@ -126,10 +122,9 @@ class Proyecto(BaseTimeModel, BaseSEOModel):
     resumen = models.CharField(max_length=250)
     descripcion = models.TextField()
     imagen_portada = models.ImageField(upload_to="sitio_web/proyectos/", blank=True, null=True)
-    enlace_externo = models.URLField(blank=True)
+    destacado = models.BooleanField(default=False)
     orden = models.PositiveIntegerField(default=0)
     activo = models.BooleanField(default=True)
-    destacado = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["orden", "-created_at"]
@@ -149,27 +144,24 @@ class Proyecto(BaseTimeModel, BaseSEOModel):
 class ProyectoImagen(BaseTimeModel):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, related_name="imagenes")
     imagen = models.ImageField(upload_to="sitio_web/proyectos/galeria/")
-    titulo = models.CharField(max_length=120, blank=True)
+    titulo_opcional = models.CharField(max_length=120, blank=True)
     orden = models.PositiveIntegerField(default=0)
-    activo = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["orden", "id"]
 
     def __str__(self):
-        return self.titulo or f"Imagen {self.id}"
+        return self.titulo_opcional or f"Imagen {self.id}"
 
 
 class Testimonio(BaseTimeModel):
     nombre = models.CharField(max_length=120)
     cargo = models.CharField(max_length=140, blank=True)
     empresa = models.CharField(max_length=140, blank=True)
+    mensaje = models.TextField()
     foto = models.ImageField(upload_to="sitio_web/testimonios/", blank=True, null=True)
-    comentario = models.TextField()
-    calificacion = models.PositiveSmallIntegerField(default=5)
     orden = models.PositiveIntegerField(default=0)
     activo = models.BooleanField(default=True)
-    destacado = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["orden", "id"]
@@ -181,7 +173,7 @@ class Testimonio(BaseTimeModel):
 class AliadoLogo(BaseTimeModel):
     nombre = models.CharField(max_length=120)
     logo = models.ImageField(upload_to="sitio_web/aliados/")
-    sitio_web = models.URLField(blank=True)
+    url = models.URLField(blank=True)
     orden = models.PositiveIntegerField(default=0)
     activo = models.BooleanField(default=True)
 
@@ -207,21 +199,20 @@ class PreguntaFrecuente(BaseTimeModel):
 
 class BloqueContenido(BaseTimeModel):
     CLAVE_CHOICES = (
-        ("beneficios", "Beneficios"),
+        ("fortalezas", "Fortalezas"),
+        ("soluciones", "Soluciones"),
         ("estadisticas", "Estadísticas"),
         ("cta", "Llamado a la acción"),
-        ("nosotros_home", "Nosotros en inicio"),
     )
 
     clave = models.CharField(max_length=60, choices=CLAVE_CHOICES)
     titulo = models.CharField(max_length=180)
     subtitulo = models.CharField(max_length=240, blank=True)
     descripcion = models.TextField(blank=True)
-    icono = models.CharField(max_length=60, blank=True)
     imagen = models.ImageField(upload_to="sitio_web/bloques/", blank=True, null=True)
-    valor_numerico = models.PositiveIntegerField(blank=True, null=True)
-    orden = models.PositiveIntegerField(default=0)
+    icono = models.CharField(max_length=60, blank=True)
     activo = models.BooleanField(default=True)
+    orden = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ["clave", "orden", "id"]
@@ -230,31 +221,17 @@ class BloqueContenido(BaseTimeModel):
         return f"{self.get_clave_display()} - {self.titulo}"
 
 
-class MenuItem(BaseTimeModel):
-    titulo = models.CharField(max_length=120)
-    url = models.CharField(max_length=255)
-    orden = models.PositiveIntegerField(default=0)
-    activo = models.BooleanField(default=True)
-
-    class Meta:
-        ordering = ["orden", "id"]
-
-    def __str__(self):
-        return self.titulo
-
-
-class ContactoLead(BaseTimeModel):
+class MensajeContacto(models.Model):
     nombre = models.CharField(max_length=120)
-    empresa = models.CharField(max_length=150, blank=True)
-    correo = models.EmailField()
+    email = models.EmailField()
     telefono = models.CharField(max_length=50, blank=True)
-    servicio_interes = models.CharField(max_length=180, blank=True)
+    asunto = models.CharField(max_length=180, blank=True)
     mensaje = models.TextField()
-    ip = models.GenericIPAddressField(blank=True, null=True)
     leido = models.BooleanField(default=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-fecha_creacion"]
 
     def __str__(self):
-        return f"{self.nombre} - {self.correo}"
+        return f"{self.nombre} - {self.email}"

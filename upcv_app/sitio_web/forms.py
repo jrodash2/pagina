@@ -1,20 +1,19 @@
 from django import forms
 
-from .models import ContactoLead
+from .models import MensajeContacto
 
 
-class ContactoLeadForm(forms.ModelForm):
+class MensajeContactoForm(forms.ModelForm):
     website = forms.CharField(required=False, widget=forms.TextInput(attrs={"class": "d-none", "tabindex": "-1", "autocomplete": "off"}))
 
     class Meta:
-        model = ContactoLead
-        fields = ["nombre", "empresa", "correo", "telefono", "servicio_interes", "mensaje"]
+        model = MensajeContacto
+        fields = ["nombre", "email", "telefono", "asunto", "mensaje"]
         widgets = {
             "nombre": forms.TextInput(attrs={"class": "form-control", "placeholder": "Nombre completo"}),
-            "empresa": forms.TextInput(attrs={"class": "form-control", "placeholder": "Empresa"}),
-            "correo": forms.EmailInput(attrs={"class": "form-control", "placeholder": "correo@empresa.com"}),
+            "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": "correo@empresa.com"}),
             "telefono": forms.TextInput(attrs={"class": "form-control", "placeholder": "+502 ..."}),
-            "servicio_interes": forms.TextInput(attrs={"class": "form-control", "placeholder": "Servicio de interés"}),
+            "asunto": forms.TextInput(attrs={"class": "form-control", "placeholder": "Asunto"}),
             "mensaje": forms.Textarea(attrs={"class": "form-control", "rows": 4, "placeholder": "Cuéntanos tu necesidad"}),
         }
 
