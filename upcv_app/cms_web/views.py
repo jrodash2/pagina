@@ -71,6 +71,14 @@ class CmsListView(ListView):
     context_object_name = "items"
     paginate_by = 30
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["list_title"] = getattr(self, "list_title", self.model._meta.verbose_name_plural.title())
+        create_url_name = getattr(self, "create_url_name", None)
+        ctx["create_url"] = reverse_lazy(create_url_name) if create_url_name else None
+        ctx["is_mensaje_model"] = self.model.__name__ == "MensajeContacto"
+        return ctx
+
     @classmethod
     def as_view(cls, **initkwargs):
         view = super().as_view(**initkwargs)
@@ -80,6 +88,11 @@ class CmsListView(ListView):
 class CmsCreateView(CreateView):
     template_name = "cms_web/crud_form.html"
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["form_title"] = getattr(self, "form_title", self.model._meta.verbose_name.title())
+        return ctx
+
     @classmethod
     def as_view(cls, **initkwargs):
         view = super().as_view(**initkwargs)
@@ -88,6 +101,11 @@ class CmsCreateView(CreateView):
 
 class CmsUpdateView(UpdateView):
     template_name = "cms_web/crud_form.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["form_title"] = getattr(self, "form_title", self.model._meta.verbose_name.title())
+        return ctx
 
     @classmethod
     def as_view(cls, **initkwargs):
@@ -116,6 +134,7 @@ class ConfiguracionUpdateView(CmsUpdateView):
 class HeroList(CmsListView):
     model = HeroSlide
     ordering = ["orden", "id"]
+    create_url_name = "cms_web:hero_nuevo"
 
 
 class HeroCreate(CmsCreateView):
@@ -137,6 +156,7 @@ class HeroDelete(CmsDeleteView):
 
 class PaginaList(CmsListView):
     model = Pagina
+    create_url_name = "cms_web:pagina_nueva"
 
 
 class PaginaCreate(CmsCreateView):
@@ -158,6 +178,7 @@ class PaginaDelete(CmsDeleteView):
 
 class ServicioList(CmsListView):
     model = Servicio
+    create_url_name = "cms_web:servicio_nuevo"
 
 
 class ServicioCreate(CmsCreateView):
@@ -179,6 +200,7 @@ class ServicioDelete(CmsDeleteView):
 
 class ProyectoList(CmsListView):
     model = Proyecto
+    create_url_name = "cms_web:proyecto_nuevo"
 
 
 class ProyectoCreate(CmsCreateView):
@@ -200,6 +222,7 @@ class ProyectoDelete(CmsDeleteView):
 
 class ProyectoImagenList(CmsListView):
     model = ProyectoImagen
+    create_url_name = "cms_web:proyecto_imagen_nueva"
 
 
 class ProyectoImagenCreate(CmsCreateView):
@@ -221,6 +244,7 @@ class ProyectoImagenDelete(CmsDeleteView):
 
 class TestimonioList(CmsListView):
     model = Testimonio
+    create_url_name = "cms_web:testimonio_nuevo"
 
 
 class TestimonioCreate(CmsCreateView):
@@ -242,6 +266,7 @@ class TestimonioDelete(CmsDeleteView):
 
 class AliadoList(CmsListView):
     model = AliadoLogo
+    create_url_name = "cms_web:aliado_nuevo"
 
 
 class AliadoCreate(CmsCreateView):
@@ -263,6 +288,7 @@ class AliadoDelete(CmsDeleteView):
 
 class FaqList(CmsListView):
     model = PreguntaFrecuente
+    create_url_name = "cms_web:faq_nueva"
 
 
 class FaqCreate(CmsCreateView):
@@ -284,6 +310,7 @@ class FaqDelete(CmsDeleteView):
 
 class BloqueList(CmsListView):
     model = BloqueContenido
+    create_url_name = "cms_web:bloque_nuevo"
 
 
 class BloqueCreate(CmsCreateView):

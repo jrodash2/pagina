@@ -1,8 +1,8 @@
 {% extends 'cms_web/base.html' %}
 {% block content %}
-<div class="card"><div class="card-header d-flex justify-content-between"><h5>{{ view.model._meta.verbose_name_plural|title }}</h5>
-<a href="{{ request.path }}nuevo/" class="btn btn-primary btn-sm">Nuevo</a></div>
+<div class="card"><div class="card-header d-flex justify-content-between"><h5>{{ list_title }}</h5>
+<a href="{{ create_url|default:'#' }}" class="btn btn-primary btn-sm">Nuevo</a></div>
 <div class="card-body"><div class="table-responsive"><table class="table table-hover"><thead><tr><th>ID</th><th>Registro</th><th></th></tr></thead><tbody>
-{% for item in items %}<tr><td>{{ item.pk }}</td><td>{{ item }}</td><td class="text-end"><a href="{{ item.pk }}/editar/" class="btn btn-sm btn-outline-primary">Editar</a> <a href="{{ item.pk }}/eliminar/" class="btn btn-sm btn-outline-danger">Eliminar</a>{% if view.model.__name__ == 'MensajeContacto' %} <a href="{% url 'cms_web:mensaje_detalle' item.pk %}" class="btn btn-sm btn-primary">Detalle</a>{% endif %}</td></tr>{% empty %}<tr><td colspan="3">Sin registros</td></tr>{% endfor %}
+{% for item in items %}<tr><td>{{ item.pk }}</td><td>{{ item }}</td><td class="text-end"><a href="{{ item.pk }}/editar/" class="btn btn-sm btn-outline-primary">Editar</a> <a href="{{ item.pk }}/eliminar/" class="btn btn-sm btn-outline-danger">Eliminar</a>{% if is_mensaje_model %} <a href="{% url 'cms_web:mensaje_detalle' item.pk %}" class="btn btn-sm btn-primary">Detalle</a>{% endif %}</td></tr>{% empty %}<tr><td colspan="3">Sin registros</td></tr>{% endfor %}
 </tbody></table></div></div></div>
 {% endblock %}
