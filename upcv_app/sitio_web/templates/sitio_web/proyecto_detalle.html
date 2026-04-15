@@ -1,0 +1,6 @@
+{% extends 'sitio_web/base_public.html' %}
+{% block title %}{{ proyecto.titulo }} | {{ sitio_config.nombre_sitio }}{% endblock %}
+{% block content %}
+<section class="inner-hero"><div class="container"><h1>{{ proyecto.titulo }}</h1><p>{{ proyecto.categoria }} · {{ proyecto.cliente }}</p></div></section>
+<section class="py-5"><div class="container"><p>{{ proyecto.descripcion|linebreaks }}</p><div class="row g-3 mt-2">{% for imagen in proyecto.imagenes.all %}<div class="col-md-4">{% if imagen.imagen %}<img src="{{ imagen.imagen.url }}" class="img-fluid rounded-3" alt="{{ imagen.titulo_opcional }}">{% endif %}</div>{% endfor %}</div></div></section>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ sitio_config.nombre_sitio|default:'Sitio Corporativo' }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ sitio_config.meta_description|default:sitio_config.descripcion_corta|default:'Soluciones tecnológicas corporativas.' }}{% endblock %}">
+  <link rel="icon" href="{% if sitio_config and sitio_config.favicon %}{{ sitio_config.favicon.url }}{% else %}{% static 'assets/images/favicon.svg' %}{% endif %}">
+  <link rel="stylesheet" href="{% static 'assets/css/vendors/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/font-awesome.css' %}">
+  <link rel="stylesheet" href="{% static 'sitio_web/css/site.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top site-nav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'sitio_web:home' %}">
+      {% if sitio_config and sitio_config.logo %}<img src="{{ sitio_config.logo.url }}" alt="logo" class="site-logo">{% endif %}
+      <span>{{ sitio_config.nombre_sitio|default:'AulaPro Tech' }}</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuMain"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="menuMain">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="{% url 'sitio_web:home' %}">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'sitio_web:nosotros' %}">Nosotros</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'sitio_web:servicios' %}">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'sitio_web:proyectos' %}">Proyectos</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'sitio_web:contacto' %}">Contacto</a></li>
+        {% for p in paginas_menu %}<li class="nav-item"><a class="nav-link" href="{{ p.get_absolute_url }}">{{ p.titulo }}</a></li>{% endfor %}
+        {% for i in sitio_menu_items %}<li class="nav-item"><a class="nav-link" href="{{ i.url }}">{{ i.titulo }}</a></li>{% endfor %}
+        <li class="nav-item ms-lg-2"><a class="btn btn-sm btn-outline-light" href="/cms/login/">Panel</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+{% if messages %}
+<div class="container mt-5 pt-5">{% for message in messages %}<div class="alert alert-success">{{ message }}</div>{% endfor %}</div>
+{% endif %}
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container py-4">
+    <div class="row g-4">
+      <div class="col-md-5">
+        <h5>{{ sitio_config.nombre_sitio|default:'AulaPro Tech' }}</h5>
+        <p>{{ sitio_config.descripcion_corta|default:'Integración tecnológica, servicios cloud y modernización digital para empresas.' }}</p>
+      </div>
+      <div class="col-md-4">
+        <h6>Contacto</h6>
+        <p class="mb-1"><i class="fa fa-phone"></i> {{ sitio_config.telefono_1|default:'(502) 0000-0000' }}</p>
+        <p class="mb-1"><i class="fa fa-envelope"></i> {{ sitio_config.email|default:'info@empresa.com' }}</p>
+        <p class="mb-0"><i class="fa fa-map-marker"></i> {{ sitio_config.direccion|default:'Ciudad de Guatemala' }}</p>
+      </div>
+      <div class="col-md-3">
+        <h6>Enlaces</h6>
+        <a href="{% url 'sitio_web:servicios' %}" class="d-block text-light">Servicios</a>
+        <a href="{% url 'sitio_web:proyectos' %}" class="d-block text-light">Portafolio</a>
+        <a href="/cms/" class="d-block text-light">Administrar contenido</a>
+      </div>
+    </div>
+    <hr>
+    <p class="mb-0 text-center">{{ sitio_config.footer_text|default:'© Soluciones tecnológicas corporativas.' }}</p>
+  </div>
+</footer>
+
+{% if sitio_config and sitio_config.whatsapp %}
+<a href="{{ sitio_config.whatsapp }}" class="whatsapp-float" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i></a>
+{% endif %}
+
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'sitio_web/js/site.js' %}"></script>
+</body>
+</html>

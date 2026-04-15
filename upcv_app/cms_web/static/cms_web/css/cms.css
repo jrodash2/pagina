@@ -1,0 +1,4 @@
+.sidebar-wrapper{width:260px;background:#fff;border-right:1px solid #e5e7eb;min-height:100vh;position:fixed}
+.page-body{margin-left:260px}
+.sidebar-links li{margin:.35rem 0}.sidebar-links a{display:block;padding:.4rem .5rem;border-radius:.4rem;color:#334155;text-decoration:none}.sidebar-links a:hover{background:#eef2ff;color:#4338ca}
+.card-stat{border:0;box-shadow:0 8px 22px rgba(30,41,59,.07)}
